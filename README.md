@@ -29,3 +29,12 @@ Copy these files to your application/controllers and application/views path
 Then call it as you normally would e.g. http://localhost/my_ci/theme_example
 
 I provided this with theme switching (via a cookie, just so you know)
+
+## Themes
+
+I included 2 themes.
+
+1) Bootstrap, from twitter (this is the default theme) ( http://twitter.github.com/bootstrap )
+2) Skeleton ( http://getskeleton.com/ )
+
+Both themes are excellent but if you want you can always drop-in your own themes.

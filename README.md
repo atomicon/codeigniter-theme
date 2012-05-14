@@ -34,7 +34,7 @@ I provided this with theme switching (via a cookie, just so you know)
 
 I included 2 themes.
 
-1) Bootstrap, from twitter (this is the default theme) ( http://twitter.github.com/bootstrap )
-2) Skeleton ( http://getskeleton.com/ )
+-  Bootstrap, from twitter (this is the default theme) ( http://twitter.github.com/bootstrap )
+-  Skeleton ( http://getskeleton.com/ )
 
 Both themes are excellent but if you want you can always drop-in your own themes.

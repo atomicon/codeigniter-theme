@@ -17,6 +17,10 @@
     </style>
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 
+    <!-- Le jQuery and bootstrap JS -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -94,11 +98,6 @@
       </footer>
 
     </div> <!-- /container -->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery.js"></script>
 
   </body>
 </html>

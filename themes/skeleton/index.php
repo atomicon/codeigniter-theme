@@ -78,7 +78,7 @@
 
 	<!-- JS
 	================================================== -->
-	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
 	<script src="javascripts/tabs.js"></script>
 
 <!-- End Document

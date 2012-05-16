@@ -307,7 +307,7 @@ class Theme
      */
     private static function _replace_url($x)
     {
-        $url = isset($x[3]) ? strtolower($x[3]) : '';
+        $url = isset($x[3]) ? $x[3] : '';
         if (strpos($url, 'http') !== 0 &&
             strpos($url, 'mailto') !== 0 &&
             strpos($url, '/') !== 0 &&

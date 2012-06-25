@@ -10,21 +10,48 @@ class Theme
     protected $_content  = '';      //the content (filled by the view/theme function)
     protected $_data     = array(); //the data (variables passed to the theme and views)
     protected $_messages = array(); //messages to display
-
+    
+    private $_module = NULL;          //current module
+    private $_controller = NULL;      //current controller
+    private $_method = NULL;          //current method
+    
+    private $_template_locations = array();
+    
+    
     /**
      * Theme::__construct()
      * @return void
      */
     function __construct()
     {
+        
     	//get the CI instance
     	$this->_ci = &get_instance();
 
-		//get the config
+	//get the config
         $this->_config = config_item('theme');
 
-		//set the theme
+        //set the theme
         $this->set_theme($this->_config['theme']);
+        
+        if (method_exists( $this->_ci->router, 'fetch_module' ))
+        {
+            $this->_module 	= $this->_ci->router->fetch_module();
+        }
+
+        // What controllers or methods are in use
+        $this->_controller	= $this->_ci->router->fetch_class();
+        $this->_method 		= $this->_ci->router->fetch_method();
+        
+        $this->_template_locations = array( $this->config('path') . $this->config('theme') . '/views/modules/' . $this->_module .'/',
+                                            $this->config('path') . $this->config('theme') . '/views/',
+                                            $this->config('path') . 'default/views/modules/' . $this->_module .'/',
+                                            $this->config('path') . 'default/views/',
+                                            APPPATH . 'modules/' . $this->_module . '/views/'
+                                     );
+        
+
+        
     }
 
 	/**
@@ -219,7 +246,7 @@ class Theme
     {
         $data    = is_array($data) ? $data : array();
         $data    = array_merge($this->_data, $data);
-        $content = $this->partial($view, $data, true);
+        $content = $this->partial($view, $data, $return);
         return $this->render($content, $return);
     }
 
@@ -241,7 +268,26 @@ class Theme
         $theme = $this->config('path') . $this->config('theme') . '/' . $this->config('layout') . '.php';
         if (!file_exists($theme))
         {
-            show_error('Make sure you configurate your theme <small>(did you copy the <u>themes</u> folder to your root?)</small><br><br>'.$theme.' not found.');
+            if($this->config('theme') != "default")
+            {
+                //save the original requested themes for the error message, if the default theme also not exist
+                $theme_requested    = $theme;
+                $theme = $this->config('path') . 'default/index.php';
+                
+                if(!file_exists($theme))
+                {
+                    show_error('Make sure you configurate your theme <small>(did you copy the <u>themes</u> folder to your root?)</small><br><br>Requested Theme: '.$theme_requested.' not found.<br />Default Theme: '.$theme.' not found.');
+                }
+                else
+                {
+                    $this->set_theme();
+                }
+            }
+            else 
+            {
+                show_error('Make sure you configurate your theme <small>(did you copy the <u>themes</u> folder to your root?)</small><br><br>Default Theme: '.$theme.' not found.');
+            }
+            
         }
 
         ob_start();
@@ -276,21 +322,26 @@ class Theme
     {
         $data = is_array($data) ? $data : array();
         $data = array_merge($this->_data, $data);
-
-        $path = $this->config('path') . $this->config('theme') . '/views/' . $view . '.php';
-        if (file_exists($path))
+        $path = NULL;
+        
+        foreach($this->_template_locations as $location)
         {
-            extract($data);
-            ob_start();
-            include ($path);
-            $output = ob_get_contents();
-            ob_end_clean();
+            if(file_exists($location.$view.'.php') && $path == NULL)
+            {
+                $path = $location.$view.'.php';
+                extract($data);
+                ob_start();
+                include ($path);
+                $output = ob_get_contents();
+                ob_end_clean();
+            }
         }
-        else
+        
+        if ($path == NULL)
         {
             $output = get_instance()->load->view($view, $data, TRUE);
         }
-
+        
         if ($return)
         {
             return $output;
@@ -318,4 +369,6 @@ class Theme
         }
         return isset($x[1]) ? ($x[1] . $url) : $url;
     }
+    
+    
 }

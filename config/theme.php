@@ -8,7 +8,7 @@
 $config['theme']['path'] = FCPATH . 'themes/';
 
 //This is the url to the themes path
-$config['theme']['url'] = trim(config_item('base_url'), '\\/ ') . '/themes/';
+$config['theme']['url'] = trim(config_item('base_url'), '/ ') . '/themes/';
 
 //This is the default theme (subfolder in the themes folder)
 $config['theme']['theme'] = 'default';

@@ -71,6 +71,13 @@ class Theme
     	{
     		include($functions);
     	}
+
+        $this->_template_locations = array( $this->config('path') . $this->config('theme') . '/views/modules/' . $this->_module .'/',
+                                            $this->config('path') . $this->config('theme') . '/views/',
+                                            $this->config('path') . 'default/views/modules/' . $this->_module .'/',
+                                            $this->config('path') . 'default/views/',
+                                            APPPATH . 'modules/' . $this->_module . '/views/'
+                                     );
     }
 
 	/**

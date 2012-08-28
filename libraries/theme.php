@@ -369,6 +369,7 @@ class Theme
             strpos($url, 'mailto') !== 0 &&
             strpos($url, '/') !== 0 &&
             strpos($url, '#') !== 0 &&
+            strpos($url, 'javascript') !== 0 &&
             strpos($url, '{') !== 0)
         {
             $url = '{template_url}/' . $url;

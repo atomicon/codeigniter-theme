@@ -1,22 +1,21 @@
-<?php
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Theme
 {
     /**
      * Protected variables
      */
-    protected $_ci       = NULL;    //codeigniter instance
-    protected $_config   = array(); //the theme config
-    protected $_content  = '';      //the content (filled by the view/theme function)
-    protected $_data     = array(); //the data (variables passed to the theme and views)
-    protected $_messages = array(); //messages to display
+    protected $_ci       	= NULL;    //codeigniter instance
+    protected $_config   	= array(); //the theme config
+    protected $_content  	= '';      //the content (filled by the view/theme function)
+    protected $_data     	= array(); //the data (variables passed to the theme and views)
+    protected $_messages 	= array(); //messages to display
 
-    private $_module = NULL;          //current module
-    private $_controller = NULL;      //current controller
-    private $_method = NULL;          //current method
+    private $_module 		= NULL;  	//current module
+    private $_controller 	= NULL;  	//current controller
+    private $_method 		= NULL;		//current method
 
     private $_template_locations = array();
-
 
     /**
      * Theme::__construct()
@@ -24,12 +23,12 @@ class Theme
      */
     function __construct()
     {
-
     	//get the CI instance
     	$this->_ci = &get_instance();
-
-	//get the config
-        $this->_config = config_item('theme');
+		
+		//get the config
+		// Autoload config : Replace config_item('theme') with $this->_ci->config->load('theme')
+        $this->_config = $this->_ci->config->load('theme');
 
         //set the theme
         $this->set_theme($this->_config['theme']);
@@ -43,15 +42,13 @@ class Theme
         $this->_controller	= $this->_ci->router->fetch_class();
         $this->_method 		= $this->_ci->router->fetch_method();
 
-        $this->_template_locations = array( $this->config('path') . $this->config('theme') . '/views/modules/' . $this->_module .'/',
-                                            $this->config('path') . $this->config('theme') . '/views/',
-                                            $this->config('path') . 'default/views/modules/' . $this->_module .'/',
-                                            $this->config('path') . 'default/views/',
-                                            APPPATH . 'modules/' . $this->_module . '/views/'
-                                     );
-
-
-
+        $this->_template_locations = array(
+			$this->config('path') . $this->config('theme') . '/views/modules/' . $this->_module .'/',
+			$this->config('path') . $this->config('theme') . '/views/',
+			$this->config('path') . 'default/views/modules/' . $this->_module .'/',
+			$this->config('path') . 'default/views/',
+			APPPATH . 'modules/' . $this->_module . '/views/'
+		);
     }
 
 	/**
@@ -72,12 +69,14 @@ class Theme
     		include($functions);
     	}
 
-        $this->_template_locations = array( $this->config('path') . $this->config('theme') . '/views/modules/' . $this->_module .'/',
-                                            $this->config('path') . $this->config('theme') . '/views/',
-                                            $this->config('path') . 'default/views/modules/' . $this->_module .'/',
-                                            $this->config('path') . 'default/views/',
-                                            APPPATH . 'modules/' . $this->_module . '/views/'
-                                     );
+        $this->_template_locations = array(
+			$this->config('path') . $this->config('theme') . '/views/modules/' . $this->_module .'/',
+			$this->config('path') . $this->config('theme') . '/views/',
+			$this->config('path') . 'default/views/modules/' . $this->_module .'/',
+			$this->config('path') . 'default/views/',
+			APPPATH . 'modules/' . $this->_module . '/views/'
+		);
+		return $this;
     }
 
 	/**
@@ -96,6 +95,7 @@ class Theme
     		$layout = 'index';
     	}
     	$this->set_config('layout', $layout);
+		return $this;
     }
 
 	/**
@@ -113,6 +113,7 @@ class Theme
     		'message' => $message,
     		'type'    => $type,
 		);
+		return $this;
     }
 
 	/**
@@ -127,6 +128,7 @@ class Theme
     {
    		$messages = is_array($messages) ? $messages : array();
    		$this->_messages = $messages;
+		return $this;
     }
 
 	/**
@@ -139,6 +141,7 @@ class Theme
     function clear_messages()
     {
     	$this->_messages = array();
+		return $this;
     }
 
     /**
@@ -168,6 +171,7 @@ class Theme
     function set_config($name, $value)
     {
         $this->_config[$name] = $value;
+		return $this;
     }
 
     /**
@@ -198,6 +202,7 @@ class Theme
     function set($name, $value)
     {
         $this->_data[$name] = $value;
+		return $this;
     }
 
     /**
@@ -376,6 +381,4 @@ class Theme
         }
         return isset($x[1]) ? ($x[1] . $url) : $url;
     }
-
-
 }

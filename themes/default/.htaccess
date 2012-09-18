@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond $1 !^(css|img|js)
+RewriteRule ^(.*)$ /$1 [L]

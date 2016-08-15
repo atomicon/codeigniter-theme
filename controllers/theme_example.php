@@ -10,7 +10,7 @@ class Theme_example extends CI_Controller {
 		$this->load->helper( array('url', 'cookie'));
 
 		//load theme spark
-		$this->load->spark('theme/1.0.0');
+		#$this->load->spark('theme/1.0.0');
 
 		//try to get the theme from the cookie
 		$theme = get_cookie('theme');
